@@ -7,12 +7,7 @@ define(function (require, exports) {
 	}
 
 
-	var dom = {
-		tag: '',
-		class: '',
-		attributes: {},
-		children: []
-	}
+
 
 	var model = {}
 })

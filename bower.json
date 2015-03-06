@@ -10,6 +10,9 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.16"
+    "requirejs": "~2.1.16",
+    "qunit": "~1.17.1",
+    "algorithm-data-structure": "valaxy/algorithm-data-structure",
+    "chance": "~0.7.3"
   }
 }
