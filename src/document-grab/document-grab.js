@@ -7,7 +7,7 @@ define(function (require) {
 		var declaration = getComputedStyle(element)
 		var css = {}
 		for (var key in declaration) {
-			if (!/\d+/.test(key) && declaration.hasOwnProperty(key)) {
+			if (!/\d+/.test(key) && declaration.hasOwnProperty(key) && ['parentRule', 'length'].indexOf(key) < 0) {
 				css[key] = declaration[key]
 			}
 		}

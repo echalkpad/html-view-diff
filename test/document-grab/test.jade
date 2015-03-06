@@ -5,11 +5,15 @@ html
         title test
         link(rel="stylesheet" href="test.css")
     body
-        div
-            h1 this is title
-            p
-                span 1
-                span 2
+        //div
+        //    h1 this is title
+        //    p
+        //        span 1
+        //        span 2
+        //ul
+        //    li A
+        //    li B
+        //    li C
 
         div.page2
 
@@ -20,7 +24,8 @@ html
             require.config({
                 baseUrl: '../../',
                 paths: {
-                    'chance': 'bower_components/chance/chance'
+                    'chance': 'bower_components/chance/chance',
+                    'jquery': 'bower_components/jquery/dist/jquery.min'
                 }
             })
             require(['test/document-grab/test'], function (test) {

@@ -1,15 +1,27 @@
 define(function (require, exports) {
-	var documentGrab = require('src/document-grab/index')
+	var documentGrab = require('src/document-grab/document-grab')
 	var IdGenerator = require('src/document-grab/id-generator')
+	var $ = require('jquery')
+
+
+	var addCss = function (node) {
+		var css = '#' + node.id + '{'
+		for (var key in node.css) {
+			css += key + ':' + node.css[key] + ';'
+		}
+		css += '}\n'
+		document.styleSheets[0].insertRule(css, 0)
+	}
 
 	var createElement = function (node) {
-		var tag = document.createElement(node.tag)
-		tag.id = node.id
+		var element = document.createElement(node.tag)
+		element.id = node.id
 		if (node.text) {
 			var textNode = document.createTextNode(node.text)
-			tag.appendChild(textNode)
+			element.appendChild(textNode)
 		}
-		return tag
+		addCss(node)
+		return element
 	}
 
 	var _preOrder = function (parent, invoke) {
@@ -20,9 +32,9 @@ define(function (require, exports) {
 		}
 	}
 
-	var preOrder = function (root, invoke) {
+	var preOrder = function (root, rootElement, invoke) {
 		invoke(root, {
-			_element: document.getElementsByClassName('page2')[0]
+			_element: rootElement
 		})
 		_preOrder(root, invoke)
 	}
@@ -34,15 +46,29 @@ define(function (require, exports) {
 		//console.log(g.generate())
 
 
-		// test grab
-		var dom = documentGrab()
-		console.log(dom)
+		// read wx
+		$.get('https://mp.weixin.qq.com/', function (html) {
+			document.write(html)
 
-		preOrder(dom, function (child, parent) {
-			var childElement = child._element = createElement(child)
-			var parentElement = parent._element
-			parentElement.appendChild(childElement)
+			setTimeout(function () {
+				// test grab
+				var dom = documentGrab()
+				console.log(dom)
+
+				var rootElement = document.createElement('div')
+				preOrder(dom, rootElement, function (child, parent) {
+					var childElement = child._element = createElement(child)
+					var parentElement = parent._element
+					parentElement.appendChild(childElement)
+				})
+
+				document.documentElement.appendChild(rootElement)
+			}, 1000)
+
+
 		})
+
+
 	}
 
 })

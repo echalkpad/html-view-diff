@@ -3,7 +3,7 @@ define(function (require) {
 
 	var IdGenerator = function () {
 		var random = new Chance()
-		this._guid = random.guid()
+		this._guid = 'x-' + random.guid() // guid head may be number
 		this._number = 0
 
 	}
