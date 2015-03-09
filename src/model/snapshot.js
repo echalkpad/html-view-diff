@@ -1,13 +1,16 @@
-define(function (require, exports) {
+define(function (require) {
+	var Backbone = require('backbone')
+	require('backbone-relational')
 
-	var Snapshot = function () {
-		this.id = ''
-		this.dom = {}
-		this.model = {}
-	}
+	var Snapshot = Backbone.RelationalModel.extend({
+		defaults: function () {
+			return {
+				dom: null,
+				model: null
+			}
+		}
+	})
 
 
-
-
-	var model = {}
+	return Snapshot
 })
