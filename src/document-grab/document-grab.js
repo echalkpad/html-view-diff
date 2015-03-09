@@ -29,7 +29,7 @@ define(function (require) {
 			element: element,
 			data: new SnapshotDom({
 				tag: element.tagName == 'BODY' ? 'DIV' : element.tagName,
-				id: g.generate(),
+				tagId: g.generate(),
 				css: getCss(element),
 				text: text,
 				attributes: {}

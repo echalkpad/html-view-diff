@@ -5,7 +5,7 @@ define(function (require, exports) {
 
 
 	var addCss = function (node) {
-		var css = '#' + node.id + '{'
+		var css = '#' + node.tagId + '{'
 		for (var key in node.css) {
 			css += key + ':' + node.css[key] + ';'
 		}
@@ -15,7 +15,7 @@ define(function (require, exports) {
 
 	var createElement = function (node) {
 		var element = document.createElement(node.tag)
-		element.id = node.id
+		element.id = node.tagId
 		if (node.text) {
 			var textNode = document.createTextNode(node.text)
 			element.appendChild(textNode)
@@ -67,8 +67,6 @@ define(function (require, exports) {
 
 
 		})
-
-
 	}
 
 })

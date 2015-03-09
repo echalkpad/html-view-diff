@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>视图view</title><link rel="stylesheet" href="index.css"></head><body><div class="everything"><iframe src="https://mp.weixin.qq.com/" class="old"></iframe><iframe src="../new-page/index.html" class="new"></iframe></div><script src="../../bower_components/requirejs/require.js"></script><!-- startup--><script>require.config({
+<script src="../../bower_components/requirejs/require.js"></script><script>require.config({
     baseUrl: '../../',
     paths: {
         'jquery': 'bower_components/jquery/dist/jquery.min',
@@ -10,6 +10,6 @@
         'chance': 'bower_components/chance/chance'
     }
 })
-require(['underscore', 'src/page/index'], function (_, index) {
+require(['underscore', 'src/new-page/index'], function (_, index) {
     index.init()
-})</script></body></html>
+})</script>
