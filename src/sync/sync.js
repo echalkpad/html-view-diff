@@ -9,4 +9,10 @@ define(function (require, exports) {
 			db: db
 		})
 	}
+
+	exports.getSnapshotDom = function (id, done) {
+		$.get('http://127.0.0.1:12345/snapshot/' + id, function (data) {
+			done(data)
+		}, 'text')
+	}
 })

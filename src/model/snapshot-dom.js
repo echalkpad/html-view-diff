@@ -2,6 +2,7 @@ define(function (require) {
 	var protobuf = require('../sync/protobuf')
 	var ByteBuffer = require('ByteBuffer')
 	var _ = require('underscore')
+	var $ = require('jquery')
 
 	var SnapshotDom = function (options) {
 		this.tag = options.tag                  // tag name
@@ -40,7 +41,7 @@ define(function (require) {
 
 
 	SnapshotDom.fromProtobuf = function (data) {
-		var encode = ByteBuffer.fromBase64(data)
+		var encode = ByteBuffer.fromBinary(data)
 		var protoModel = protobuf.SnapshotDom.decode(encode)
 		return SnapshotDom._fromProtobufModel(protoModel)
 	}
@@ -54,7 +55,16 @@ define(function (require) {
 			css: me.css,
 			children: me.children
 		})
-		return model.encode().toBase64()
+		return model.encode().toBinary()
+	}
+
+
+	SnapshotDom.prototype.save = function (done) {
+		var me = this
+		var data = me.toProtobuf()
+		$.post('http://127.0.0.1:12345/snapshot', data, function (res) {
+			done()
+		}, 'text')
 	}
 
 	return SnapshotDom

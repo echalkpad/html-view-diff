@@ -1,5 +1,16 @@
 define(function (require, exports) {
+	var sync = require('../sync/sync')
+	var protobuf = require('../sync/protobuf')
+	var SnapshotDom = require('../model/snapshot-dom')
+	var recover = require('../document-grab/recover')
+
 	exports.init = function () {
-		document.write('<h1>heelo</h1>')
+		protobuf.init(function () {
+			sync.getSnapshotDom('1425978273605', function (data) {
+				var dom = SnapshotDom.fromProtobuf(data)
+				console.log(dom)
+				recover(dom)
+			})
+		})
 	}
 })
