@@ -1,5 +1,5 @@
 define(function (require) {
-	var protobuf = require('protobuf')
+	var protobuf = require('../sync/protobuf')
 
 	var SnapshotDom = function (options) {
 		this.tag = options.tag                  // tag name
@@ -12,7 +12,14 @@ define(function (require) {
 
 
 	SnapshotDom.prototype.toProtobuf = function () {
-
+		var me = this
+		var model = new protobuf.SnapshotDom({
+			tag: me.tag,
+			tagId: me.tagId,
+			css: me.css
+		})
+		console.log(111)
+		return model
 	}
 
 	return SnapshotDom
