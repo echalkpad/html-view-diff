@@ -2,6 +2,7 @@ define(function (require, exports) {
 	var documentGrab = require('src/document-grab/document-grab')
 	var IdGenerator = require('src/document-grab/id-generator')
 	var $ = require('jquery')
+	var protobuf = require('protobuf')
 
 
 	var addCss = function (node) {
@@ -39,6 +40,16 @@ define(function (require, exports) {
 		_preOrder(root, invoke)
 	}
 
+	var enumCss = function (css) {
+		var s = ''
+		var i = 1
+		for (var key in css) {
+			s += ['optional string ', key, ' = ', i, ';\n'].join('')
+			i++
+		}
+		console.log(s)
+	}
+
 	exports.init = function () {
 		//// test IdGenerator
 		//var g = new IdGenerator()
@@ -47,13 +58,15 @@ define(function (require, exports) {
 
 
 		// read wx
-		$.get('https://mp.weixin.qq.com/', function (html) {
+		$.get('http://www.baidu.com', function (html) {
 			document.write(html)
 
 			setTimeout(function () {
 				// test grab
 				var dom = documentGrab()
 				console.log(dom)
+				//console.log(JSON.stringify(dom).length) //4.8M for baidu 首页
+				enumCss(dom.css)
 
 				var rootElement = document.createElement('div')
 				preOrder(dom, rootElement, function (child, parent) {
@@ -67,6 +80,23 @@ define(function (require, exports) {
 
 
 		})
+	}
+
+
+	exports.init = function () {
+		var builder = protobuf.loadProtoFile('snapshot.proto')
+		var ProtoSnapshot = builder.build('Snapshot')
+		var model = new ProtoSnapshot({
+			dom: {
+				tag: 'abcd',
+				tagId: 'abcde',
+				css: {
+					webkitTextCombine: 'asfdasfaaa',
+					webkitTextDecorationsInEffect: 'xxxx'
+				}
+			}
+		})
+		console.log(model.encode().toBase64())
 	}
 
 })

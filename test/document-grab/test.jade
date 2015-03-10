@@ -18,16 +18,10 @@ html
         div.page2
 
         script(src="../../bower_components/requirejs/require.js")
-
+        script(src="../../src/page/config.js")
         // startup
         script.
-            require.config({
-                baseUrl: '../../',
-                paths: {
-                    'chance': 'bower_components/chance/chance',
-                    'jquery': 'bower_components/jquery/dist/jquery.min'
-                }
-            })
+
             require(['test/document-grab/test'], function (test) {
                 test.init()
             })

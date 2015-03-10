@@ -7,13 +7,12 @@ define(function (require) {
 		var declaration = getComputedStyle(element)
 		var css = {}
 		for (var key in declaration) {
-			if (!/\d+/.test(key) && declaration.hasOwnProperty(key) && ['parentRule', 'length'].indexOf(key) < 0) {
+			if (!/\d+/.test(key) && declaration.hasOwnProperty(key) && ['parentRule', 'length', 'cssText'].indexOf(key) < 0) {
 				css[key] = declaration[key]
 			}
 		}
 		return css
 	}
-
 
 	var createState = function (element, g) {
 		// concat all text node
