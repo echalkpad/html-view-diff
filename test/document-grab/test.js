@@ -22,6 +22,7 @@ define(function (require, exports) {
 			setTimeout(function () {
 				// test grab
 				var dom = documentGrab()
+				console.log(dom)
 
 				protobuf.init(function () {
 					//console.log(JSON.stringify(dom).length * 4.0 / 1024 / 1024 + 'MB')

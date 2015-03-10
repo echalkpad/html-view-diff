@@ -360,14 +360,15 @@ message SnapshotCss {
 }
 
 message SnapshotAttribute {
-
+    optional string key = 1;
+    optional string value = 2;
 }
 
 message SnapshotDom {
     optional string tag = 1;
     optional string tagId = 2;
     optional SnapshotCss css = 3;
-    optional string attributes = 4;
+    repeated SnapshotAttribute attributes = 4;
     optional string text = 5;
     repeated SnapshotDom children = 6;
 }

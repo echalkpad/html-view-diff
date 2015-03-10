@@ -5,12 +5,12 @@ define(function (require) {
 	var $ = require('jquery')
 
 	var SnapshotDom = function (options) {
-		this.tag = options.tag                  // tag name
-		this.tagId = options.tagId              // tag id
-		this.css = options.css                  // computedCss
-		//this.attributes = options.attributes    // key-value of attribute node
-		//this.text = options.text                // direct inner text
-		this.children = options.children ? options.children : []        // children dom
+		this.tag = options.tag                                      // tag name
+		this.tagId = options.tagId                                  // tag id
+		this.css = options.css                                      // computedCss
+		this.attributes = options.attributes                        // key-value of attribute node
+		this.text = options.text ? options.text : ''                // direct inner text
+		this.children = options.children ? options.children : []    // children dom
 	}
 
 
@@ -24,6 +24,13 @@ define(function (require) {
 			}
 		}
 
+		// create attribute
+		var attrModel = {}
+		for (var i in protoModel.attributes) {
+			var att = protoModel.attributes[i]
+			attrModel[att.key] = att.value
+		}
+
 		// create children
 		var children = _.map(protoModel.children, function (child) {
 			return SnapshotDom._fromProtobufModel(child)
@@ -34,7 +41,9 @@ define(function (require) {
 			tag: protoModel.tag,
 			tagId: protoModel.tagId,
 			css: css,
-			children: children
+			text: protoModel.text,
+			children: children,
+			attributes: attrModel
 		})
 		return model
 	}
@@ -46,15 +55,31 @@ define(function (require) {
 		return SnapshotDom._fromProtobufModel(protoModel)
 	}
 
+	SnapshotDom.prototype._toProtobufInit = function () {
+		var children = _.map(this.children, function (child) {
+			return child._toProtobufInit()
+		})
+		var attributes = _.pairs(this.attributes).map(function (keyValue) {
+			var key = keyValue[0]
+			var value = keyValue[1]
+			return {
+				key: key,
+				value: value
+			}
+		})
+		return {
+			tag: this.tag,
+			tagId: this.tagId,
+			css: this.css,
+			text: this.text,
+			children: children,
+			attributes: attributes
+		}
+	}
+
 
 	SnapshotDom.prototype.toProtobuf = function () {
-		var me = this
-		var model = new protobuf.SnapshotDom({
-			tag: me.tag,
-			tagId: me.tagId,
-			css: me.css,
-			children: me.children
-		})
+		var model = new protobuf.SnapshotDom(this._toProtobufInit())
 		return model.encode().toBinary()
 	}
 

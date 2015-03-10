@@ -8,6 +8,13 @@ define(function () {
 		document.styleSheets[0].insertRule(css, 0)
 	}
 
+	var addAttributes = function (element, attr) {
+		for (var key in attr) {
+			var value = attr[key]
+			element.setAttribute(key, value)
+		}
+	}
+
 	var createElement = function (node) {
 		var element = document.createElement(node.tag)
 		element.id = node.tagId
@@ -16,6 +23,7 @@ define(function () {
 			element.appendChild(textNode)
 		}
 		addCss(node)
+		addAttributes(element, node.attributes)
 		return element
 	}
 

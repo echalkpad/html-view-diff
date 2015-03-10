@@ -15,6 +15,10 @@ define(function (require) {
 					background: '#333',
 					webkitMask: 'none',
 					zIndex: '123'
+				},
+				attributes: {
+					a: 'abc',
+					b: '123'
 				}
 			})
 			var data = dom.toProtobuf()
@@ -26,6 +30,7 @@ define(function (require) {
 			assert.equal(dom.css.background, dom2.css.background)
 			assert.equal(dom.css.webkitMask, dom2.css.webkitMask)
 			assert.equal(dom.css.zIndex, dom2.css.zIndex)
+			assert.deepEqual(dom.attributes, dom2.attributes)
 
 
 			done()

@@ -14,6 +14,19 @@ define(function (require) {
 		return css
 	}
 
+	var getAttributes = function (element) {
+		var atts = {}
+		var attributes = element.attributes
+		for (var i = 0; i < attributes.length; i++) {
+			var attNode = attributes[i]
+			if (attNode.name == 'id') {
+				continue
+			}
+			atts[attNode.name] = attNode.value
+		}
+		return atts
+	}
+
 	var createState = function (element, g) {
 		// concat all text node
 		var text = ''
@@ -31,7 +44,7 @@ define(function (require) {
 				tagId: g.generate(),
 				css: getCss(element),
 				text: text,
-				attributes: {}
+				attributes: getAttributes(element)
 			})
 		}
 	}
