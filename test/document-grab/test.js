@@ -66,7 +66,7 @@ define(function (require, exports) {
 				var dom = documentGrab()
 				console.log(dom)
 				//console.log(JSON.stringify(dom).length) //4.8M for baidu 首页
-				enumCss(dom.css)
+
 
 				var rootElement = document.createElement('div')
 				preOrder(dom, rootElement, function (child, parent) {
@@ -83,20 +83,20 @@ define(function (require, exports) {
 	}
 
 
-	exports.init = function () {
-		var builder = protobuf.loadProtoFile('snapshot.proto')
-		var ProtoSnapshot = builder.build('Snapshot')
-		var model = new ProtoSnapshot({
-			dom: {
-				tag: 'abcd',
-				tagId: 'abcde',
-				css: {
-					webkitTextCombine: 'asfdasfaaa',
-					webkitTextDecorationsInEffect: 'xxxx'
-				}
-			}
-		})
-		console.log(model.encode().toBase64())
-	}
+	//exports.init = function () {
+	//	var builder = protobuf.loadProtoFile('../../src/model/snapshot.proto')
+	//	var ProtoSnapshot = builder.build('Snapshot')
+	//	var model = new ProtoSnapshot({
+	//		dom: {
+	//			tag: 'abcd',
+	//			tagId: 'abcde',
+	//			css: {
+	//				webkitTextCombine: 'asfdasfaaa',
+	//				webkitTextDecorationsInEffect: 'xxxx'
+	//			}
+	//		}
+	//	})
+	//	console.log(model.encode().toBase64())
+	//}
 
 })
