@@ -1,8 +1,8 @@
 define(function (require, exports) {
 	var documentGrab = require('src/document-grab/document-grab')
-	var IdGenerator = require('src/document-grab/id-generator')
+
 	var $ = require('jquery')
-	var protobuf = require('protobuf')
+	var protobuf = require('src/sync/protobuf')
 
 
 	var addCss = function (node) {
@@ -51,52 +51,36 @@ define(function (require, exports) {
 	}
 
 	exports.init = function () {
-		//// test IdGenerator
-		//var g = new IdGenerator()
-		//console.log(g.generate())
-		//console.log(g.generate())
+
 
 
 		// read wx
-		$.get('http://www.baidu.com', function (html) {
+		$.get('http://www.baidu.com/', function (html) {
 			document.write(html)
 
 			setTimeout(function () {
 				// test grab
 				var dom = documentGrab()
-				console.log(dom)
-				//console.log(JSON.stringify(dom).length) //4.8M for baidu 首页
+
+				protobuf.init(function () {
+					console.log(JSON.stringify(dom).length * 4.0 / 1024 / 1024 + 'MB')
+					console.log(dom.toProtobuf().length * 4.0 / 1024 / 1024 + 'MB')
 
 
-				var rootElement = document.createElement('div')
-				preOrder(dom, rootElement, function (child, parent) {
-					var childElement = child._element = createElement(child)
-					var parentElement = parent._element
-					parentElement.appendChild(childElement)
+					var rootElement = document.createElement('div')
+					preOrder(dom, rootElement, function (child, parent) {
+						var childElement = child._element = createElement(child)
+						var parentElement = parent._element
+						parentElement.appendChild(childElement)
+					})
+
+					document.documentElement.appendChild(rootElement)
 				})
 
-				document.documentElement.appendChild(rootElement)
 			}, 1000)
 
 
 		})
 	}
-
-
-	//exports.init = function () {
-	//	var builder = protobuf.loadProtoFile('../../src/model/snapshot.proto')
-	//	var ProtoSnapshot = builder.build('Snapshot')
-	//	var model = new ProtoSnapshot({
-	//		dom: {
-	//			tag: 'abcd',
-	//			tagId: 'abcde',
-	//			css: {
-	//				webkitTextCombine: 'asfdasfaaa',
-	//				webkitTextDecorationsInEffect: 'xxxx'
-	//			}
-	//		}
-	//	})
-	//	console.log(model.encode().toBase64())
-	//}
 
 })
