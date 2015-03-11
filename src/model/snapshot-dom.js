@@ -50,7 +50,7 @@ define(function (require) {
 
 
 	SnapshotDom.fromProtobuf = function (data) {
-		var encode = ByteBuffer.fromBinary(data)
+		var encode = ByteBuffer.fromBase64(data)
 		var protoModel = protobuf.SnapshotDom.decode(encode)
 		return SnapshotDom._fromProtobufModel(protoModel)
 	}
@@ -80,7 +80,7 @@ define(function (require) {
 
 	SnapshotDom.prototype.toProtobuf = function () {
 		var model = new protobuf.SnapshotDom(this._toProtobufInit())
-		return model.encode().toBinary()
+		return model.encode().toBase64()
 	}
 
 

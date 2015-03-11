@@ -6,7 +6,7 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		protobuf.init(function () {
-			sync.getSnapshotDom('1425978273605', function (data) {
+			sync.getSnapshotDom('xx', function (data) {
 				var dom = SnapshotDom.fromProtobuf(data)
 				console.log(dom)
 				recover(dom)

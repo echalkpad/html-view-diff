@@ -11,8 +11,14 @@ define(function (require, exports) {
 	}
 
 	exports.getSnapshotDom = function (id, done) {
-		$.get('http://127.0.0.1:12345/snapshot/' + id, function (data) {
+		$.get('http://127.0.0.1:12345/snapshot', function (data) {
 			done(data)
 		}, 'text')
+	}
+
+	exports.grab = function (done) {
+		$.get('http://127.0.0.1:12345/grab', function () {
+			done()
+		})
 	}
 })

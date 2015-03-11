@@ -44,7 +44,7 @@ define(function () {
 
 
 	var recover = function (dom) {
-		var rootElement = document.createElement('body')
+		var rootElement = document.documentElement
 		preOrder(dom, rootElement, function (child, parent) {
 			var childElement = child._element = createElement(child)
 			var parentElement = parent._element

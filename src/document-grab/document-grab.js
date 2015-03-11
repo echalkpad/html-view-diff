@@ -40,7 +40,7 @@ define(function (require) {
 		return {
 			element: element,
 			data: new SnapshotDom({
-				tag: element.tagName == 'BODY' ? 'DIV' : element.tagName,
+				tag: element.tagName, // element.tagName == 'BODY' ? 'DIV' : element.tagName,
 				tagId: g.generate(),
 				css: getCss(element),
 				text: text,
@@ -60,7 +60,7 @@ define(function (require) {
 
 
 	// search 可以重构
-	var grab = function () {
+	var grab = function (document) {
 		var g = new IdGenerator()
 		var root = createState(document.getElementsByTagName('body')[0], g)
 

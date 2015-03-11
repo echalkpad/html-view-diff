@@ -2092,7 +2092,10 @@ var requirejs, require, define;
 	                'backbone': 'bower_components/backbone/backbone',
 	                'backbone-pouch': 'bower_components/backbone-pouch/backbone-pouch',
 	                'backbone-relational': 'bower_components/backbone-relational/backbone-relational',
-	                'chance': 'bower_components/chance/chance'
+	                'chance': 'bower_components/chance/chance',
+	                'protobuf': 'bower_components/protobuf/dist/ProtoBuf.min',
+	                'ByteBuffer': 'bower_components/bytebuffer/dist/ByteBufferAB',
+	                'Long': 'bower_components/long/dist/Long'
                 }
             })
             require(['underscore', 'src/document-grab/startup'], function (_, index) {

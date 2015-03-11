@@ -16,21 +16,19 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		// read wx
-		$.get('http://www.baidu.com/', function (html) {
+		$.get('http://www.hust.edu.cn/', function (html) {
 			document.write(html)
 
 			setTimeout(function () {
 				// test grab
 				var dom = documentGrab()
-				console.log(dom)
 
 				protobuf.init(function () {
 					//console.log(JSON.stringify(dom).length * 4.0 / 1024 / 1024 + 'MB')
 					//console.log(dom.toProtobuf().length / 1024 / 1024 + 'MB')
-					//dom.save(function () {
-					//	console.log('保存成功')
-					//})
-
+					dom.save(function () {
+						console.log('保存成功')
+					})
 					recover(dom)
 				})
 

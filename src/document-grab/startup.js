@@ -2,17 +2,16 @@ define(function (require, exports) {
 	var documentGrab = require('../document-grab/document-grab')
 	var Snapshot = require('../model/snapshot')
 	var sync = require('../sync/sync')
+	var protobuf = require('../sync/protobuf')
 
 	exports.init = function () {
-		alert()
-		console.log(1111111111111111111)
-		var dom = documentGrab()
-		console.log(dom)
+		var dom = documentGrab(document)
 
 		sync.init()
-		var snap = new Snapshot({
-			dom: dom
+		protobuf.init(function () {
+			dom.save(function () {
+				console.log('save success')
+			})
 		})
-		snap.save()
 	}
 })

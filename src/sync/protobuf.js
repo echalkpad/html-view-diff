@@ -3,7 +3,8 @@ define(function (require, exports) {
 
 	exports.init = function (done, url) {
 		var me = this
-		protobuf.loadProtoFile(url ? url : '../../src/model/snapshot.proto', function (err, builder) {
+		// '../../src/model/snapshot.proto'
+		protobuf.loadProtoFile(url ? url : 'http://localhost:63342/html-view-diff/src/model/snapshot.proto', function (err, builder) {
 			if (err) {
 				throw err
 			}
