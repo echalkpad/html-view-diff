@@ -1,8 +1,34 @@
 define(function () {
+	// the body is automatically generated
+	var fillBody = function (node) {
+		var body = document.getElementsByTagName('body')[0]
+		fillElement(body, node)
+		return body
+	}
+
+	var getKey = function (key) {
+		key = key[0].toUpperCase() + key.slice(1)
+		var matches = key.match(/[A-Z][a-z]*/g)
+		var newKey = matches[0]
+		for (var i = 1; i < matches.length; i++) {
+			newKey += '-' + matches[i]
+		}
+		return newKey
+	}
+
+	var getKeyHasWebkit = function (key) {
+		if (key.slice(0, 6) == 'webkit') {
+			return '-webkit-' + getKey(key.slice(6))
+		}
+		return getKey(key)
+	}
+
+
 	var addCss = function (node) {
 		var css = '#' + node.tagId + '{'
 		for (var key in node.css) {
-			css += key + ':' + node.css[key] + ';'
+			var newKey = getKeyHasWebkit(key)
+			css += newKey + ':' + node.css[key] + ';'
 		}
 		css += '}\n'
 		document.styleSheets[0].insertRule(css, 0)
@@ -15,8 +41,7 @@ define(function () {
 		}
 	}
 
-	var createElement = function (node) {
-		var element = document.createElement(node.tag)
+	var fillElement = function (element, node) {
 		element.id = node.tagId
 		if (node.text) {
 			var textNode = document.createTextNode(node.text)
@@ -24,7 +49,19 @@ define(function () {
 		}
 		addCss(node)
 		addAttributes(element, node.attributes)
+	}
+
+	var createElement = function (node) {
+		var element = document.createElement(node.tag)
+		fillElement(element, node)
 		return element
+	}
+
+	var addBase = function () {
+		var head = document.getElementsByTagName('head')[0]
+		var base = document.createElement('base')
+		base.setAttribute('href', 'http://www.12306.cn/mormhweb/')
+		head.appendChild(base)
 	}
 
 	var _preOrder = function (parent, invoke) {
@@ -36,22 +73,22 @@ define(function () {
 	}
 
 	var preOrder = function (root, rootElement, invoke) {
-		invoke(root, {
-			_element: rootElement
-		})
+		//invoke(root, {
+		//	_element: rootElement
+		//})
 		_preOrder(root, invoke)
 	}
 
 
 	var recover = function (dom) {
-		var rootElement = document.documentElement
+		addBase()
+		var rootElement = fillBody(dom)
+		dom._element = rootElement
 		preOrder(dom, rootElement, function (child, parent) {
 			var childElement = child._element = createElement(child)
 			var parentElement = parent._element
 			parentElement.appendChild(childElement)
 		})
-
-		document.documentElement.appendChild(rootElement)
 	}
 
 	return recover
