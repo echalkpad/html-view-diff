@@ -1,6 +1,6 @@
 define(function (require) {
 	var deepFirst = require('bower_components/algorithm-data-structure/src/search/deep-first')
-	var ElementNodeData = require('../model/snapshot-dom')
+	var ElementNodeData = require('../model/element-node-data')
 	var TextNodeData = require('../model/text-node-data')
 	var IdGenerator = require('./id-generator')
 
@@ -37,7 +37,7 @@ define(function (require) {
 			domNode: elementDomNode,
 			data: new ElementNodeData({
 				tag: elementDomNode.tagName,
-				tagId: g.generate(),
+				id: g.generate(),
 				css: getCss(elementDomNode),
 				attributes: getAttributes(elementDomNode)
 			})
@@ -49,7 +49,7 @@ define(function (require) {
 		return {
 			domNode: textDomNode,
 			data: new TextNodeData({
-				tagId: g.generate(),
+				id: g.generate(),
 				text: textDomNode.textContent
 			})
 		}

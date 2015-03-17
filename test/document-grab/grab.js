@@ -37,8 +37,8 @@ define(function (require) {
 	})
 
 
-	test('grab()', function () {
-		console.log(grab(document))
-	})
+	//test('grab()', function () {
+	//	console.log(grab(document))
+	//})
 
 })

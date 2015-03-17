@@ -3,13 +3,14 @@ define(function (require, exports) {
 
 	exports.init = function (done, url) {
 		var me = this
-		// '../../src/model/snapshot.proto'
-		protobuf.loadProtoFile(url ? url : 'http://localhost:63342/html-view-diff/src/model/snapshot.proto', function (err, builder) {
+		// 'http://localhost:63342/html-view-diff/src/model/snapshot.proto'
+		protobuf.loadProtoFile(url ? url : '../../src/model/snapshot.proto', function (err, builder) {
 			if (err) {
 				throw err
 			}
-			me.SnapshotDom = builder.build('SnapshotDom')
-			me.Snapshot = builder.build('Snapshot')
+			me.NodeData = builder.build('NodeData')
+			me.TextNodeData = builder.build('TextNodeData')
+			me.ElementNodeData = builder.build('ElementNodeData')
 			done()
 		})
 	}

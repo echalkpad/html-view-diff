@@ -1,4 +1,4 @@
-message SnapshotCss {
+message ElementCss {
     optional string alignContent = 1;
     optional string alignItems = 2;
     optional string alignSelf = 3;
@@ -359,20 +359,26 @@ message SnapshotCss {
     optional string zoom = 358;
 }
 
-message SnapshotAttribute {
-    optional string key = 1;
-    optional string value = 2;
+message ElementAttribute {
+    optional string           key = 1;
+    optional string           value = 2;
 }
 
-message SnapshotDom {
-    optional string tag = 1;
-    optional string tagId = 2;
-    optional SnapshotCss css = 3;
-    repeated SnapshotAttribute attributes = 4;
-    optional string text = 5;
-    repeated SnapshotDom children = 6;
+
+message ElementNodeData {
+    optional string           tagName = 1;
+    optional ElementCss       css = 2;
+    repeated ElementAttribute attributes = 3;
+    repeated ElementNodeData  children = 4;
 }
 
-message Snapshot {
-    optional SnapshotDom dom = 1;
+message TextNodeData {
+    optional string           text = 1;
+}
+
+
+message NodeData {
+    optional string           id = 1;
+    optional ElementNodeData  elementData = 2;
+    optional TextNodeData     textData = 3;
 }

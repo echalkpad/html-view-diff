@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: '../',
+	baseUrl: '../../',
 	paths: {
 		'jquery': 'bower_components/jquery/dist/jquery.min',
 		'pouchdb': 'bower_components/pouchdb/dist/pouchdb.min',

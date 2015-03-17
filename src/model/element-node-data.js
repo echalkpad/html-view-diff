@@ -6,7 +6,7 @@ define(function (require) {
 
 	var SnapshotDom = function (options) {
 		this.tag = options.tag                                      // tag name
-		this.tagId = options.tagId                                  // tag id
+		this.id = options.id                                        // tag id
 		this.css = options.css                                      // computedCss
 		this.attributes = options.attributes                        // key-value of attribute node
 		this.text = options.text ? options.text : ''                // direct inner text
@@ -55,9 +55,9 @@ define(function (require) {
 		return SnapshotDom._fromProtobufModel(protoModel)
 	}
 
-	SnapshotDom.prototype._toProtobufInit = function () {
+	SnapshotDom.prototype.toProtobufJSON = function () {
 		var children = _.map(this.children, function (child) {
-			return child._toProtobufInit()
+			return child.toProtobufJSON()
 		})
 		var attributes = _.pairs(this.attributes).map(function (keyValue) {
 			var key = keyValue[0]
@@ -79,7 +79,7 @@ define(function (require) {
 
 
 	SnapshotDom.prototype.toProtobuf = function () {
-		var model = new protobuf.SnapshotDom(this._toProtobufInit())
+		var model = new protobuf.SnapshotDom(this.toProtobufJSON())
 		return model.encode().toBase64()
 	}
 
