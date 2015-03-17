@@ -9,8 +9,8 @@ define(function (require, exports) {
 				throw err
 			}
 			me.NodeData = builder.build('NodeData')
-			me.TextNodeData = builder.build('TextNodeData')
-			me.ElementNodeData = builder.build('ElementNodeData')
+			//me.TextNodeData = builder.build('TextNodeData')
+			//me.ElementNodeData = builder.build('ElementNodeData')
 			done()
 		})
 	}

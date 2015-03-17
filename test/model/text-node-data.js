@@ -42,7 +42,7 @@ define(function (require) {
 				text: 'aaa'
 			})
 			var proto = new protobuf.NodeData(textNode._toProtobufJSON())
-			assert.deepEqual(TextNodeData._fromProtobufModel(proto).toJSON(), textNode.toJSON())
+			assert.deepEqual(TextNodeData._fromProtobufModel(proto)._toProtobufJSON(), textNode._toProtobufJSON())
 			done()
 		})
 	})

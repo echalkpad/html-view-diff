@@ -36,8 +36,8 @@ define(function (require) {
 		return {
 			domNode: elementDomNode,
 			data: new ElementNodeData({
-				tag: elementDomNode.tagName,
 				id: g.generate(),
+				tagName: elementDomNode.tagName,
 				css: getCss(elementDomNode),
 				attributes: getAttributes(elementDomNode)
 			})
