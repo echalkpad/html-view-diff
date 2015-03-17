@@ -39,18 +39,17 @@ define(function (require) {
 		}
 	}
 
-	ElementNodeData.prototype.toProtobuf = function () {
-		var model = new protobuf.NodeData(this._toProtobufJSON())
-		return model.encode().toBase64()
-	}
-
-
 	ElementNodeData.prototype.save = function (done) {
 		var me = this
 		var data = me.toProtobuf()
 		$.post('http://127.0.0.1:12345/snapshot', data, function (res) {
 			done()
 		}, 'text')
+	}
+
+	ElementNodeData.prototype.toProtobuf = function () {
+		var model = new protobuf.NodeData(this._toProtobufJSON())
+		return model.encode().toBase64()
 	}
 
 	ElementNodeData.fromProtobuf = function (data) {

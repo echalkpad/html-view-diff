@@ -369,7 +369,7 @@ message ElementNodeData {
     optional string           tagName = 1;
     optional ElementCss       css = 2;
     repeated ElementAttribute attributes = 3;
-    repeated ElementNodeData  children = 4;
+    repeated NodeData         children = 4;
 }
 
 message TextNodeData {

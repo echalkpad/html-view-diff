@@ -1,5 +1,6 @@
 define(function (require) {
 	var ElementNodeData = require('src/model/element-node-data')
+	var TextNodeData = require('src/model/text-node-data')
 	var protobuf = require('src/sync/protobuf')
 
 	module('ElementNodeData')
@@ -66,67 +67,78 @@ define(function (require) {
 		})
 	})
 
-	//
-	//test('toProtobuf()/fromProtobuf(): single case', function (assert) {
-	//	var done = assert.async()
-	//	protobuf.init(function () {
-	//		// build the protobuf
-	//		var dom = new ElementNodeData({
-	//			tag: 'div',
-	//			tagId: 'xyz',
-	//			css: {
-	//				background: '#333',
-	//				webkitMask: 'none',
-	//				zIndex: '123'
-	//			},
-	//			attributes: {
-	//				a: 'abc',
-	//				b: '123'
-	//			}
-	//		})
-	//		var data = dom.toProtobuf()
-	//
-	//		// parse the data
-	//		var dom2 = ElementNodeData.fromProtobuf(data)
-	//		assert.equal(dom.tag, dom2.tag)
-	//		assert.equal(dom.tagId, dom2.tagId)
-	//		assert.equal(dom.css.background, dom2.css.background)
-	//		assert.equal(dom.css.webkitMask, dom2.css.webkitMask)
-	//		assert.equal(dom.css.zIndex, dom2.css.zIndex)
-	//		assert.deepEqual(dom.attributes, dom2.attributes)
-	//
-	//
-	//		done()
-	//	}, '../src/model/snapshot.proto')
-	//})
-	//
-	//
-	//test('toProtobuf(): tree case', function (assert) {
-	//	var root = new ElementNodeData({
-	//		tag: 'body',
-	//		tagId: 'a1',
-	//		css: {color: 'red'},
-	//		children: [
-	//			new ElementNodeData({
-	//				tag: 'div',
-	//				tagId: 'a2',
-	//				css: {color: 'blue'},
-	//				children: [
-	//					new ElementNodeData({
-	//						tag: 'p',
-	//						tagId: 'a3',
-	//						css: {color: 'black'},
-	//						children: []
-	//					})
-	//				]
-	//			})
-	//		]
-	//	})
-	//	var data = root.toProtobuf()
-	//
-	//	var root2 = ElementNodeData.fromProtobuf(data)
-	//	assert.equal(root.tag, root2.tag)
-	//	assert.equal(root.children[0].tag, root2.children[0].tag)
-	//	assert.equal(root.children[0].children[0].tagId, root2.children[0].children[0].tagId)
-	//})
+
+	test('toProtobuf()/fromProtobuf(): single case', function (assert) {
+		var done = assert.async()
+		protobuf.init(function () {
+			// build the protobuf
+			var data = new ElementNodeData({
+				id: 'xyz',
+				tagName: 'div',
+				css: {
+					background: '#333',
+					webkitMask: 'none',
+					zIndex: '123'
+				},
+				attributes: {
+					a: 'abc',
+					b: '123'
+				}
+			})
+			var protoEncode = data.toProtobuf()
+
+			// parse the data
+			var proto = ElementNodeData.fromProtobuf(protoEncode)
+			assert.equal(data.id, proto.id)
+			assert.equal(data.tagName, proto.tagName)
+			assert.equal(data.css.background, proto.css.background)
+			assert.equal(data.css.webkitMask, proto.css.webkitMask)
+			assert.equal(data.css.zIndex, proto.css.zIndex)
+			assert.deepEqual(data.attributes, proto.attributes)
+
+			done()
+		})
+	})
+
+
+	test('toProtobuf()/fromProtobuf(): tree case', function (assert) {
+		var done = assert.async()
+		protobuf.init(function () {
+			var root = new ElementNodeData({
+				id: 'a1',
+				tagName: 'body',
+				css: {color: 'red'},
+				children: [
+					new ElementNodeData({
+						id: 'a2',
+						tagName: 'div',
+						css: {color: 'blue'},
+						children: [
+							new ElementNodeData({
+								id: 'a3',
+								tagName: 'p',
+								css: {color: 'black'},
+								children: []
+							})
+						]
+					}),
+					new TextNodeData({
+						id: 'text-abc',
+						text: '123'
+					})
+				]
+			})
+			console.log(root._toProtobufJSON())
+			var protoEncode = root.toProtobuf()
+
+			var data = ElementNodeData.fromProtobuf(protoEncode)
+			assert.equal(root.tagName, data.tagName)
+			assert.equal(root.children.length, 2)
+			assert.equal(root.children[0].tagName, data.children[0].tagName)
+			assert.equal(root.children[0].children[0].tagName, data.children[0].children[0].tagName)
+			assert.equal(root.children[1].id, 'text-abc')
+
+			done()
+		})
+	})
 })
