@@ -4,7 +4,7 @@ define(function (require, exports) {
 	var Snapshot = require('../model/snapshot')
 	var Chance = require('chance')
 	var $ = require('jquery')
-	var documentGrab = require('../document-grab/document-grab')
+	var documentGrab = require('../document-grab/grab')
 
 
 	var inspectScript = function (document, url) {
