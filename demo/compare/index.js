@@ -1,10 +1,10 @@
 define(function (require, exports) {
-	var sync = require('../sync/sync')
-	var Case = require('../model/case')
-	var Snapshot = require('../model/snapshot')
+	var sync = require('../../src/sync/sync')
+	var Case = require('../../src/model/case')
+	var Snapshot = require('../../src/model/snapshot')
 	var Chance = require('chance')
 	var $ = require('jquery')
-	var documentGrab = require('../document-grab/grab')
+	var documentGrab = require('../../src/document-grab/grab')
 
 
 	var inspectScript = function (document, url) {
@@ -15,18 +15,12 @@ define(function (require, exports) {
 	}
 
 	exports.init = function () {
-		var document = $('.old')[0].contentDocument
-		//inspectScript(document, 'http://localhost:63342/html-view-diff/src/document-grab/require.js')
-
+		sync.init()
+		sync.grab("http://www.12306.cn/mormhweb/", function () {
+			console.log('grab success')
+		})
 
 		//var random = new Chance
-		sync.init()
-
-
-		setTimeout(function () {
-			var dom = documentGrab(document)
-			console.log(dom)
-		}, 1500)
 
 
 		//var c = new Case({

@@ -3,6 +3,9 @@ define(function (require, exports) {
 	var PouchDB = require('pouchdb')
 	require('backbone-pouch')
 
+
+	var BASE_URL = 'http://127.0.0.1:12345'
+
 	exports.init = function () {
 		var db = new PouchDB('http://localhost:5984/view')
 		Backbone.sync = BackbonePouch.sync({
@@ -16,8 +19,10 @@ define(function (require, exports) {
 		}, 'text')
 	}
 
-	exports.grab = function (done) {
-		$.get('http://127.0.0.1:12345/grab', function () {
+
+	/** grab the page */
+	exports.grab = function (url, done) {
+		$.get(BASE_URL + '/grab', {url: url}, function () {
 			done()
 		})
 	}

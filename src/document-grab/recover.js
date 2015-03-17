@@ -1,21 +1,29 @@
-define(function () {
-	// the body is automatically generated
-	var fillBody = function (node) {
-		var body = document.getElementsByTagName('body')[0]
-		fillElement(body, node)
-		return body
+define(function (require) {
+	var ElementNodeData = require('../model/element-node-data')
+
+
+	// it's need to set the base url, or network requests may break
+	var addBaseTag = function (baseUrl) {
+		var head = document.getElementsByTagName('head')[0]
+		var base = document.createElement('base')
+		base.setAttribute('href', baseUrl)
+		head.appendChild(base)
 	}
 
+
+	// zIndex -> z-index
 	var getKey = function (key) {
 		key = key[0].toUpperCase() + key.slice(1)
 		var matches = key.match(/[A-Z][a-z]*/g)
 		var newKey = matches[0]
 		for (var i = 1; i < matches.length; i++) {
-			newKey += '-' + matches[i]
+			newKey += '-' + matches[i].toLowerCase()
 		}
 		return newKey
 	}
 
+
+	// webkitMaskColor -> -webkit-mask-color
 	var getKeyHasWebkit = function (key) {
 		if (key.slice(0, 6) == 'webkit') {
 			return '-webkit-' + getKey(key.slice(6))
@@ -24,11 +32,12 @@ define(function () {
 	}
 
 
-	var addCss = function (node) {
-		var css = '#' + node.tagId + '{'
-		for (var key in node.css) {
+	// there must be has a `<link>`
+	var addCss = function (elementData) {
+		var css = '.' + elementData.id + '{'
+		for (var key in elementData.css) {
 			var newKey = getKeyHasWebkit(key)
-			css += newKey + ':' + node.css[key] + ';'
+			css += newKey + ':' + elementData.css[key] + ';'
 		}
 		css += '}\n'
 		document.styleSheets[0].insertRule(css, 0)
@@ -41,54 +50,38 @@ define(function () {
 		}
 	}
 
-	var fillElement = function (element, node) {
-		element.id = node.tagId
-		if (node.text) {
-			var textNode = document.createTextNode(node.text)
-			element.appendChild(textNode)
-		}
-		addCss(node)
-		addAttributes(element, node.attributes)
-	}
+	var fillElement = function (element, elementData) {
+		addCss(elementData) // inner stylesheet
+		addAttributes(element, elementData.attributes)
 
-	var createElement = function (node) {
-		var element = document.createElement(node.tag)
-		fillElement(element, node)
+		// use the `class` to handle identity, must after addAttributes
+		element.className = element.className + ' ' + elementData.id
+
+		// add child text or element
+		for (var i in elementData.children) {
+			var childData = elementData.children[i]
+			if (childData.constructor == ElementNodeData) {
+				var elementChildNode = createElement(childData)
+				element.appendChild(elementChildNode)
+			} else { // Text
+				var textNode = document.createTextNode(childData.text)
+				element.appendChild(textNode)
+			}
+		}
 		return element
 	}
 
-	var addBase = function () {
-		var head = document.getElementsByTagName('head')[0]
-		var base = document.createElement('base')
-		base.setAttribute('href', 'http://www.12306.cn/mormhweb/')
-		head.appendChild(base)
-	}
-
-	var _preOrder = function (parent, invoke) {
-		for (var i in parent.children) {
-			var child = parent.children[i]
-			invoke(child, parent)
-			_preOrder(child, invoke)
-		}
-	}
-
-	var preOrder = function (root, rootElement, invoke) {
-		//invoke(root, {
-		//	_element: rootElement
-		//})
-		_preOrder(root, invoke)
+	var createElement = function (elementData) {
+		var element = document.createElement(elementData.tagName)
+		fillElement(element, elementData)
+		return element
 	}
 
 
-	var recover = function (dom) {
-		addBase()
-		var rootElement = fillBody(dom)
-		dom._element = rootElement
-		preOrder(dom, rootElement, function (child, parent) {
-			var childElement = child._element = createElement(child)
-			var parentElement = parent._element
-			parentElement.appendChild(childElement)
-		})
+	var recover = function (snapshot) {
+		addBaseTag(snapshot.url)
+		var body = document.getElementsByTagName('body')[0] // the body is automatically generated, so just fill it not create it
+		fillElement(body, snapshot.root)
 	}
 
 	return recover

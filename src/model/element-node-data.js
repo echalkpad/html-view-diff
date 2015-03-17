@@ -43,6 +43,7 @@ define(function (require) {
 		var me = this
 		var data = me.toProtobuf()
 		$.post('http://127.0.0.1:12345/snapshot', data, function (res) {
+			console.log('save success')
 			done()
 		}, 'text')
 	}

@@ -128,7 +128,6 @@ define(function (require) {
 					})
 				]
 			})
-			console.log(root._toProtobufJSON())
 			var protoEncode = root.toProtobuf()
 
 			var data = ElementNodeData.fromProtobuf(protoEncode)

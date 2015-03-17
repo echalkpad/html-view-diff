@@ -1,17 +1,12 @@
 define(function (require) {
-	var Backbone = require('backbone')
 	var protobuf = require('protobuf')
 	require('backbone-relational')
 
 
-	var Snapshot = Backbone.RelationalModel.extend({
-		defaults: function () {
-			return {
-				dom: null,
-				model: null
-			}
-		}
-	})
+	var Snapshot = function (options) {
+		//this.url = options.url
+		//this.root = options.root
+	}
 
 	Snapshot.fromProtobuf = function () {
 

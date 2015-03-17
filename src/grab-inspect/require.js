@@ -2098,6 +2098,6 @@ var requirejs, require, define;
 	                'Long': 'bower_components/long/dist/Long'
                 }
             })
-            require(['underscore', 'src/document-grab/startup'], function (_, index) {
+            require(['bower_components/underscore/underscore', 'src/grab-inspect/startup'], function (_, index) {
                 index.init()
             })

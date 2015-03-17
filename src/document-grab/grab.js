@@ -79,7 +79,7 @@ define(function (require) {
 					if (child) {
 						if (child.nodeType == Node.ELEMENT_NODE && elementFilter(child)) { // Element Node
 							var element = createElementNodeData(child, g)
-							parent.data.children.push(child.data)
+							parent.data.children.push(element.data)
 							push(element)
 						} else if (child.nodeType == Node.TEXT_NODE) { // Text Node
 							var text = createTextNodeData(child, g)

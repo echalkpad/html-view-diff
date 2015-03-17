@@ -6,9 +6,8 @@ define(function (require) {
 	test('init()', function (assert) {
 		var done = assert.async()
 		protobuf.init(function () {
-			assert.ok(protobuf.Snapshot)
-			assert.ok(protobuf.SnapshotDom)
+			assert.ok(protobuf.NodeData)
 			done()
-		}, '../src/model/snapshot.proto')
+		})
 	})
 })
