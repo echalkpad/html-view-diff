@@ -4,7 +4,8 @@ define(function () {
 		this.text = options.text
 	}
 
-	TextNodeData.prototype.toProtobufJSON = function () {
+	// to JSON
+	TextNodeData.prototype._toProtobufJSON = function () {
 		return { // pass it to NodeData
 			id: this.id,
 			elementData: null,
@@ -12,6 +13,14 @@ define(function () {
 				text: this.text
 			}
 		}
+	}
+
+	// from `new model(JSON)`
+	TextNodeData._fromProtobufModel = function (proto) {
+		return new TextNodeData({
+			id: proto.id,
+			text: proto.textData.text
+		})
 	}
 
 	return TextNodeData

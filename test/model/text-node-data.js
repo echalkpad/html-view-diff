@@ -5,16 +5,16 @@ define(function (require) {
 
 	module('TextNodeData')
 
-	
-	test('toProtobufJSON()', function (assert) {
+
+	test('_toProtobufJSON()', function (assert) {
 		var done = assert.async()
 		protobuf.init(function () {
-			assert.ok(protobuf.TextNodeData)
+			assert.ok(protobuf.NodeData)
 			var textNode = new TextNodeData({
 				id: 'abc',
 				text: '123'
 			})
-			var protoModel = new protobuf.NodeData(textNode.toProtobufJSON())
+			var protoModel = new protobuf.NodeData(textNode._toProtobufJSON())
 			assert.deepEqual({
 				id: protoModel.id,
 				elementData: protoModel.elementData,
@@ -32,4 +32,20 @@ define(function (require) {
 			done()
 		})
 	})
+
+
+	test('_fromProtobufModel()', function (assert) {
+		var done = assert.async()
+		protobuf.init(function () {
+			var textNode = new TextNodeData({
+				id: '111',
+				text: 'aaa'
+			})
+			var proto = new protobuf.NodeData(textNode._toProtobufJSON())
+			assert.deepEqual(TextNodeData._fromProtobufModel(proto).toJSON(), textNode.toJSON())
+			done()
+		})
+	})
+
+
 })
