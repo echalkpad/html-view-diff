@@ -132,10 +132,10 @@ define(function (require) {
 
 			var data = ElementNodeData.fromProtobuf(protoEncode)
 			assert.equal(root.tagName, data.tagName)
-			assert.equal(root.children.length, 2)
-			assert.equal(root.children[0].tagName, data.children[0].tagName)
-			assert.equal(root.children[0].children[0].tagName, data.children[0].children[0].tagName)
-			assert.equal(root.children[1].id, 'text-abc')
+			assert.equal(root.childrenCount(), 2)
+			assert.equal(root.leftmostChild().tagName, data.leftmostChild().tagName)
+			assert.equal(root.leftmostChild().leftmostChild().tagName, data.leftmostChild().leftmostChild().tagName)
+			assert.equal(root.leftmostChild().rightSibling().id, 'text-abc')
 
 			done()
 		})

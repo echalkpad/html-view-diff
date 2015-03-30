@@ -20,6 +20,7 @@
     "backbone-couchdb": "janmonschke/backbone-couchdb",
     "backbone-pouch": "jo/backbone-pouch",
     "backbone-relational": "~0.9.0",
-    "protobuf": "~3.8.2"
+    "protobuf": "~3.8.2",
+    "algorithm-tree-edit-distance": "valaxy/algorithm-tree-edit-distance"
   }
 }

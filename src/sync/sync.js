@@ -22,7 +22,7 @@ define(function (require, exports) {
 
 	/** grab the page */
 	exports.grab = function (url, done) {
-		$.get(BASE_URL + '/grab', {url: url}, function () {
+		$.get(BASE_URL + '/grab', {url: 'xyz'}, function () {
 			done()
 		})
 	}
