@@ -1,0 +1,17 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title 视图view
+        link(rel="stylesheet" href="index.css")
+    body
+        div.everything
+            iframe.old(src="http://www.12306.cn/mormhweb/")
+            iframe.new(src="../recover/index.html")
+
+        script(src="../../bower_components/requirejs/require.js")
+        script(src="config.js")
+        script.
+            require(['bower_components/underscore/underscore', 'demo/compare/index'], function (_, index) {
+                index.init()
+            })
