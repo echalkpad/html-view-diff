@@ -40,6 +40,7 @@ define(function (require) {
 				_.pick(dataA.css, css),
 				_.pick(dataB.css, css)
 			)
+			&& _.isEqual(dataA.vom, dataB.vom)
 	}
 
 	var compare = function (nodeA, nodeB) {
