@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+html, body, .everything {
+	padding: 0;
+	margin:  0;
+	height:  100%;
+}
+
+.everything {
+	display:     flex;
+	align-items: stretch;
+
+	.old {
+		flex:         1;
+		border-right: 1px solid #000;
+	}
+
+	.new {
+		flex:        1;
+		border-left: 1px solid #000;
+	}
+}
+
+iframe {
+	border: none;
+}

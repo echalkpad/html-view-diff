@@ -1,0 +1,34 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title Compare two different page
+        link(rel="stylesheet" href="index.css")
+    body
+        div.everything
+            iframe.old(src="old/index.html")
+            iframe.new(src="new/index.html")
+
+        script(src="../../bower_components/requirejs/require.js")
+        script.
+            require.config({
+                baseUrl: '../../',
+
+                paths: {
+                    'jquery'    : 'bower_components/jquery/dist/jquery.min',
+                    'underscore': 'bower_components/underscore/underscore-min',
+                    'chance'    : 'bower_components/chance/chance',
+                    'protobuf'  : 'bower_components/protobuf/dist/ProtoBuf.min',
+                    'ByteBuffer': 'bower_components/bytebuffer/dist/ByteBufferAB',
+                    'Long'      : 'bower_components/long/dist/Long',
+                    'text'      : 'bower_components/requirejs-text/text'
+                },
+
+                map: {
+                    '*': {
+                        'tree-diff'        : 'bower_components/algorithm-tree-edit-distance/src/diff',
+                        'deep-first-search': 'bower_components/algorithm-data-structure/src/search/deep-first'
+                    }
+                }
+            })
+            require(['demo/diff/index'])

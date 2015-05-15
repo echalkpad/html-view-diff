@@ -1,6 +1,6 @@
 define(function (require, exports) {
 	var grab = require('../document-grab/grab')
-	var Snapshot = require('../model/snapshot')
+	var Snapshot = require('../backup/snapshot')
 	var sync = require('../sync/sync')
 	var protobuf = require('../sync/protobuf')
 

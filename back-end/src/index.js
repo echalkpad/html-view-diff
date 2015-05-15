@@ -3,7 +3,10 @@ var bodyParser = require('body-parser')
 
 
 var app = express()
-app.use('/static', express.static('../front-end'))
+app.use('/static', function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	next()
+}, express.static('../front-end'))
 app.use(bodyParser.urlencoded({extended: true}))
 require('./data-manager')(app)
 
